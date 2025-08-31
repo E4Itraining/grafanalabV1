@@ -1,0 +1,14 @@
+
+version: "3.9"
+services:
+  dql-proxy:
+    build: .
+    image: dql-proxy:mini
+    ports:
+      - "8080:8080"
+    environment:
+      DT_URL: "https://TENANT.live.dynatrace.com/e/ENV"
+      DT_TOKEN: "REPLACE_WITH_API_TOKEN"
+      ORG_BEARER: "CHANGE_ME_OPTIONAL"
+      QUERY_TIMEOUT: "30"
+    restart: unless-stopped
