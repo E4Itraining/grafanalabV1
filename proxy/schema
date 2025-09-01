@@ -1,0 +1,37 @@
+schema
+
+                          +---------------------------------------------+
+                          |                 Grafana                     |
+                          |---------------------------------------------|
+                          | - Datasource Infinity                       |
+                          | - Panels (timeseries, table)                |
+                          +-------------------+-------------------------+
+                                              |
+                         HTTPS (Bearer/mTLS)  |
+                                              v
+                +-----------------------------+--------------------------+
+                |                         Proxy DQL                      |
+                |---------------------------------------------------------|
+                |  Endpoints :                                            |
+                |   - /timeseries → JSON "grafana-timeseries"             |
+                |   - /table     → JSON "grafana-table"                   |
+                |   - /csv       → CSV                                    |
+                |   - /query     → brut DQL                               |
+                |                                                         |
+                |  Couches internes :                                     |
+                |   - Auth (Bearer/mTLS)                                  |
+                |   - Rate-limit & Circuit breaker                        |
+                |   - Cache (mémoire ou Redis, TTL configurable)          |
+                |   - Lint & allow-list DQL                               |
+                |   - Transformation JSON (frames/rows)                   |
+                +-------------------+-------------------------------------+
+                                    |
+                           API HTTP (async)
+                                    v
+                      +-------------------------------+
+                      |    Dynatrace SaaS / Grail     |
+                      |-------------------------------|
+                      | - POST /query:execute         |
+                      | - GET  /query:poll            |
+                      | - DQL results (records)       |
+                      +-------------------------------+
