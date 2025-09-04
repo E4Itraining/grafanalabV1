@@ -1,0 +1,4 @@
+export GRAFANA_URL="https://grafana.xxxx.com"
+export GRAFANA_API_KEY="xxxxx"   # clé API Grafana (lecture dashboards)
+python stats.py
+
